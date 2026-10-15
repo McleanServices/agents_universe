@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer</title>
+    <style>
+      html,
+      body,
+      #app {
+        margin: 0;
+        height: 100%;
+        background: #12141a;
+        overflow: hidden;
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      #app canvas {
+        display: block;
+      }
+
+      #hint {
+        position: fixed;
+        left: 24px;
+        bottom: 22px;
+        margin: 0;
+        color: rgba(244, 247, 251, 0.72);
+        font-size: 14px;
+        letter-spacing: 0.01em;
+        pointer-events: none;
+      }
+
+      #detail {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(480px, 40vw);
+        height: 100%;
+        box-sizing: border-box;
+        padding: 22px 22px 28px;
+        background: #12151b;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        color: #f4f7fb;
+        transform: translateX(100%);
+        transition: transform 0.28s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      #detail.open {
+        transform: translateX(0);
+      }
+
+      #detail header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      #detail .eyebrow {
+        margin: 0 0 4px;
+        color: rgba(244, 247, 251, 0.55);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      #detail h2 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 650;
+      }
+
+      #detail-close {
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #f4f7fb;
+        font-size: 22px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      #detail-close:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      #detail-screen {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        background: #05070a;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      #detail-status {
+        margin: 0;
+        color: rgba(244, 247, 251, 0.72);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <p id="hint">Click a computer to view its screen</p>
+    <aside id="detail" aria-hidden="true">
+      <header>
+        <div>
+          <p class="eyebrow">Screen</p>
+          <h2 id="detail-name"></h2>
+        </div>
+        <button id="detail-close" type="button" aria-label="Close">×</button>
+      </header>
+      <canvas id="detail-screen" width="1680" height="1020"></canvas>
+      <p id="detail-status"></p>
+    </aside>
+    <!--
+      Model credit: "Monitor | Computer | Realistic Computer Monitor"
+      by Model Wala (https://sketchfab.com/modelwala), CC-BY-4.0.
+    -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
