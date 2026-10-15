@@ -1,0 +1,15 @@
+[Unit]
+Description=Create agent tmux sessions
+After=network.target
+
+[Service]
+Type=oneshot
+User=agents
+Group=agents
+WorkingDirectory=/home/agents
+Environment=HOME=/home/agents
+ExecStart=/usr/local/bin/agents-tmux-sessions.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

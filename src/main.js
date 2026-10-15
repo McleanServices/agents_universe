@@ -119,8 +119,7 @@ let gridBounds = null;
 const detail = document.querySelector('#detail');
 const detailName = document.querySelector('#detail-name');
 const detailStatus = document.querySelector('#detail-status');
-const detailScreen = document.querySelector('#detail-screen');
-const detailContext = detailScreen.getContext('2d');
+const detailTerminal = document.querySelector('#detail-terminal');
 const hint = document.querySelector('#hint');
 
 const raycaster = new THREE.Raycaster();
@@ -383,6 +382,19 @@ function layoutView() {
   if (gridBounds) frameCameraToBounds(gridBounds);
 }
 
+function clearTerminal() {
+  detailTerminal.hidden = true;
+  detailTerminal.src = 'about:blank';
+}
+
+function terminalPath() {
+  try {
+    return new URL(detailTerminal.src, window.location.href).pathname;
+  } catch {
+    return '';
+  }
+}
+
 function selectComputer(index) {
   selectedIndex = index;
   computers.forEach((computer, i) => {
@@ -390,6 +402,7 @@ function selectComputer(index) {
   });
 
   if (index < 0) {
+    clearTerminal();
     detail.classList.remove('open');
     detail.setAttribute('aria-hidden', 'true');
     hint.hidden = false;
@@ -399,11 +412,18 @@ function selectComputer(index) {
 
   const computer = computers[index];
   detailName.textContent = computer.name;
-  detailStatus.textContent = computer.poweredOn ? '' : 'This computer is turned off.';
-  const source = computer.computerWindow.canvas;
-  detailScreen.width = source.width;
-  detailScreen.height = source.height;
-  detailContext.drawImage(source, 0, 0);
+  if (!computer.poweredOn) {
+    clearTerminal();
+    detailStatus.textContent = 'This computer is turned off.';
+  } else {
+    detailStatus.textContent = '';
+    const session = computer.name.trim().toLowerCase();
+    const url = `/term/${session}/`;
+    detailTerminal.hidden = false;
+    if (terminalPath() !== url) {
+      detailTerminal.src = url;
+    }
+  }
 
   detail.classList.add('open');
   detail.setAttribute('aria-hidden', 'false');

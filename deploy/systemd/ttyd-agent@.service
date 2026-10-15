@@ -1,0 +1,17 @@
+[Unit]
+Description=Read-only ttyd for agent %i
+After=agents-tmux.service
+Wants=agents-tmux.service
+
+[Service]
+Type=simple
+User=agents
+Group=agents
+WorkingDirectory=/home/agents
+Environment=HOME=/home/agents
+ExecStart=/usr/local/bin/agents-ttyd.sh %i
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

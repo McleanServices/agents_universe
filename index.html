@@ -45,7 +45,7 @@
         transition: transform 0.28s ease;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 16px;
       }
 
@@ -90,12 +90,18 @@
         background: rgba(255, 255, 255, 0.12);
       }
 
-      #detail-screen {
+      #detail-terminal {
+        flex: 1 1 auto;
         width: 100%;
-        height: auto;
+        min-height: 0;
+        border: 0;
         border-radius: 10px;
         background: #05070a;
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      #detail-terminal[hidden] {
+        display: none;
       }
 
       #detail-status {
@@ -108,16 +114,16 @@
   </head>
   <body>
     <div id="app"></div>
-    <p id="hint">Click a computer to view its screen</p>
+    <p id="hint">Click a computer to view its terminal</p>
     <aside id="detail" aria-hidden="true">
       <header>
         <div>
-          <p class="eyebrow">Screen</p>
+          <p class="eyebrow">Terminal</p>
           <h2 id="detail-name"></h2>
         </div>
         <button id="detail-close" type="button" aria-label="Close">×</button>
       </header>
-      <canvas id="detail-screen" width="1680" height="1020"></canvas>
+      <iframe id="detail-terminal" title="Agent terminal" hidden></iframe>
       <p id="detail-status"></p>
     </aside>
     <!--
